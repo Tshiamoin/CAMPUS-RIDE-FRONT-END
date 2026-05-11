@@ -1,0 +1,6 @@
+{
+  "name": "CampusConnect: Smart Bus System",
+  "description": "A comprehensive campus transport platform for real-time bus tracking, seat booking, and schedule management.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}

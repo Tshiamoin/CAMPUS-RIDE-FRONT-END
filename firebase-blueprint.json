@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "driver", "admin", "marshal"] },
+        "avatar": { "type": "string" },
+        "assignedBusId": { "type": "string" }
+      },
+      "required": ["id", "name", "role"]
+    },
+    "Bus": {
+      "title": "Bus",
+      "description": "Real-time bus information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "routeNumber": { "type": "string" },
+        "routeName": { "type": "string" },
+        "currentStop": { "type": "string" },
+        "nextStop": { "type": "string" },
+        "status": { "type": "string", "enum": ["on-time", "delayed", "full"] },
+        "estimatedArrival": { "type": "number" },
+        "capacity": { "type": "number" },
+        "occupied": { "type": "number" },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "driverId": { "type": "string" }
+      },
+      "required": ["id", "routeNumber", "routeName", "status", "capacity", "occupied", "coordinates"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Student ride booking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "busId": { "type": "string" },
+        "route": { "type": "string" },
+        "time": { "type": "string" },
+        "seatNumber": { "type": "string" },
+        "status": { "type": "string", "enum": ["confirmed", "completed", "cancelled"] },
+        "userName": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "busId", "route", "userId"]
+    },
+    "BusRequest": {
+      "title": "BusRequest",
+      "description": "Marshal request for support bus",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "busId": { "type": "string" },
+        "routeNumber": { "type": "string" },
+        "marshalId": { "type": "string" },
+        "marshalName": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "dispatched", "ignored"] }
+      },
+      "required": ["id", "busId", "marshalId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/buses/{busId}": {
+      "schema": "Bus",
+      "description": "Fleet status"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Passenger bookings"
+    },
+    "/busRequests/{requestId}": {
+      "schema": "BusRequest",
+      "description": "Support requests from marshals"
+    }
+  }
+}
